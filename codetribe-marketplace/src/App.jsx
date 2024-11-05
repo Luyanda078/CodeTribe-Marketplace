@@ -13,6 +13,7 @@ import UserProfile from './pages/UserProfile';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import PrivateRoutes from './components/PrivateRoutes';
+import Footer from './components/Footer';
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -38,6 +39,7 @@ function App() {
           <Route path="*" element={<h2 className="text-center text-red-500 mt-12">404 - Page Not Found</h2>} />
         </Routes>
       </div>
+      <Footer /> 
     </Router>
   );
 }
