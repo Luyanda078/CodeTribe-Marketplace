@@ -1,15 +1,15 @@
 // src/pages/AdminPanel.js
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct, fetchProducts, deleteProduct } from '../redux/slices/productSlice';
+import { addProduct, getProducts, deleteProduct } from '../redux/slices/productSlice'; // Change fetchProducts to getProducts
 
 function AdminPanel() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.items);
+  const products = useSelector((state) => state.products.products); // Ensure you're selecting the correct state
   const [newProduct, setNewProduct] = useState({ name: '', description: '', price: 0, stock: 0 });
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(getProducts()); // Use getProducts instead of fetchProducts
   }, [dispatch]);
 
   const handleAddProduct = (e) => {

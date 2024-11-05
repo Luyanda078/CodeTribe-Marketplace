@@ -1,7 +1,6 @@
-// src/App.js
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Navbar from './components/Navbar';
@@ -13,7 +12,7 @@ import OrderHistory from './pages/OrderHistory';
 import UserProfile from './pages/UserProfile';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoutes from './components/PrivateRoutes';
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -22,23 +21,25 @@ function App() {
     <Router>
       <Navbar />
       <div className="container mx-auto px-4">
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/products" component={ProductListing} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <PrivateRoute path="/admin" component={AdminPanel} />
-          <PrivateRoute path="/order-history" component={OrderHistory} />
-          <PrivateRoute path="/profile" component={UserProfile} />
-          <Route path="*">
-            <h2 className="text-center text-red-500 mt-12">404 - Page Not Found</h2>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<ProductListing />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          
+          {/* Update the usage of PrivateRoutes */}
+          <Route element={<PrivateRoutes isAuthenticated={isAuthenticated} />}>
+            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/order-history" element={<OrderHistory />} />
+            <Route path="/profile" element={<UserProfile />} />
           </Route>
-        </Switch>
+
+          <Route path="*" element={<h2 className="text-center text-red-500 mt-12">404 - Page Not Found</h2>} />
+        </Routes>
       </div>
     </Router>
   );
 }
 
 export default App;
-
